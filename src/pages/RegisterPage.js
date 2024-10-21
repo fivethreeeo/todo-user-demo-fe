@@ -37,7 +37,12 @@ const RegisterPage = () => {
         <h1>회원가입</h1>
         <Form.Group className='mb-3' controlId='formName'>
           <Form.Label>Name</Form.Label>
-          <Form.Control type='string' placeholder='Name' onChange={e => setName(e.target.value)} />
+          <Form.Control
+            type='string'
+            placeholder='Name'
+            required
+            onChange={e => setName(e.target.value)}
+          />
         </Form.Group>
 
         <Form.Group className='mb-3' controlId='formBasicEmail'>
@@ -45,6 +50,7 @@ const RegisterPage = () => {
           <Form.Control
             type='email'
             placeholder='Enter email'
+            required
             onChange={e => setEmail(e.target.value)}
           />
         </Form.Group>
@@ -54,6 +60,7 @@ const RegisterPage = () => {
           <Form.Control
             type='password'
             placeholder='Password'
+            required
             onChange={e => setPassword(e.target.value)}
           />
         </Form.Group>
@@ -63,6 +70,7 @@ const RegisterPage = () => {
           <Form.Control
             type='password'
             placeholder='re-enter the password'
+            required
             onChange={e => setPasswordConfirm(e.target.value)}
           />
         </Form.Group>
