@@ -7,6 +7,7 @@ const TodoItem = ({ item, deleteItem, toggleComplete }) => {
       <Col xs={12}>
         <div className={`todo-item ${item.isCompleted ? 'item-complete' : ''}`}>
           <div className='todo-content'>{item.task}</div>
+          <div className='todo-content'>by {item.author.name}</div>
 
           <div>
             <button className='button-delete' onClick={() => deleteItem(item._id)}>

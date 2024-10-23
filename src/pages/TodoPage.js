@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 
-const TodoPage = () => {
+const TodoPage = ({ user, setUser }) => {
   const [todoList, setTodoList] = useState([])
   const [todoValue, setTodoValue] = useState('')
 
@@ -13,14 +13,16 @@ const TodoPage = () => {
     const response = await api.get('/tasks')
     setTodoList(response.data.data)
   }
+
   useEffect(() => {
     getTasks()
   }, [])
+
   const addTodo = async () => {
     try {
       const response = await api.post('/tasks', {
         task: todoValue,
-        isCompletd: false,
+        isCompleted: false,
       })
       if (response.status === 200) {
         getTasks()
@@ -33,7 +35,6 @@ const TodoPage = () => {
 
   const deleteItem = async id => {
     try {
-      console.log(id)
       const response = await api.delete(`/tasks/${id}`)
       if (response.status === 200) {
         getTasks()
@@ -44,7 +45,6 @@ const TodoPage = () => {
   }
 
   const toggleComplete = async id => {
-    console.log(id)
     try {
       const task = todoList.find(item => item._id === id)
       const response = await api.put(`/tasks/${id}`, {
@@ -57,8 +57,25 @@ const TodoPage = () => {
       console.log('error', error)
     }
   }
+
+  const logout = () => {
+    sessionStorage.setItem('token', '')
+    setUser(null)
+  }
+
   return (
     <Container>
+      <div style={{ height: 20 }}></div>
+      <Row>
+        <Col xs={12} sm={9} style={{ lineHeight: '40px', textAlign: 'right' }}>
+          <div>접속유저: {user.name}</div>
+        </Col>
+        <Col xs={12} sm={3}>
+          <button onClick={logout} className='button-add'>
+            로그아웃
+          </button>
+        </Col>
+      </Row>
       <Row className='add-item-row'>
         <Col xs={12} sm={10}>
           <input
@@ -75,7 +92,6 @@ const TodoPage = () => {
           </button>
         </Col>
       </Row>
-
       <TodoBoard todoList={todoList} deleteItem={deleteItem} toggleComplete={toggleComplete} />
     </Container>
   )
